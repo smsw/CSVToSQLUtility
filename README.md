@@ -1,8 +1,12 @@
 # CSV Processor
-Processes CSV file containing codes and builds a SQL file which can then be inserted.
+Processes CSV file containing codes and builds a SQL file which can then be inserted into the database.
 
-## Format of CSV
-Very simple, just one code per line, no headers needed :-)
+Client should supply a CSV of approved codes, which can be processed into a SQL insert statement by
+doing the following:
+
+## First, check format of CSV is good
+Just one code per line is needed, no headers please :-)
+
 ```
 GZHZPCWKHV2KJX4X
 JM23QFYMJ6PT929D
@@ -11,21 +15,26 @@ T94EJKW9TXGRN3RT
 PQZ6TP3TRWQFFZD7
 ```
 
-## Configure and run
-Change the path of the CSV file and the path to the SQL file in run.rb, then run
+## Second, configure and run the utility (`run.rb`)
+Change the path of the CSV file and the path to the SQL file in `run.rb` if necessary, then run
+
 ```
 ruby run.rb
 ```
 
-## Tests
-Uses a utility called `entr`, download and install (`apt install entr` or `brew install entr`) and then it will
-call RSpec when any file changes are detected. Alternatively just call `rspec`.
+## Third, add the codes to the database
+Upload the newly generated sql file to where the app is running and run:
+
+```
+sqlite3 /path/to/database.sqlite3 < /path/to/codes.sql
+```
+
+## TDD
+Uses RSpec and a utility called `entr`, download and install (`apt install entr` or `brew install entr`) and run and it will
+call RSpec when any file changes are detected.
+
 ```
 ls **/*.* | entr rspec
 ```
 
-## Add codes to database
-Where ever the database is (in Rails it'll be in `db/production.sqlite3`) `cd` there and run
-```
-sqlite3 database.sqlite3 < codes.sql
-```
+Alternatively just call `rspec`.
