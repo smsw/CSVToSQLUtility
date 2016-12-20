@@ -16,6 +16,9 @@ Change the path of the CSV file and the path to the SQL file in run.rb, then run
 `ruby run.rb`
 
 ## Tests
+Uses a utility called entr, download and install (`apt install entr` or `brew install entr`) and then it will
+call RSpec when any file changes are detected. Alternatively just call `rspec`. 
+
 `ls **/*.* | entr rspec`
 
 ## Add codes to database
